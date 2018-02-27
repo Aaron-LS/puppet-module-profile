@@ -1,6 +1,8 @@
 class profile::base {
 
     include ntp
-    include motd
+    class { 'motd':
+      template => 'puppet-module-profile/welcomeMessage.erb',
+    }
 
 }
