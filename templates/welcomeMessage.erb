@@ -6,13 +6,10 @@
          SYSTEM INFO
          ============
 
-         Hostname     : ${::fqdn}
-         IP Address   : ${::ipaddress}
-         Memory       : ${::memory['system']['total']}
-         Cores        : ${::processors['count']}
-         OS           : ${::os['distro']['description']}
+         Hostname     : <%= @fqdn %>
+         IP Address   : <%= @ipaddress %>
+         Memory       : <%= @memory['system']['total'] %>
+         Cores        : <%= @processors['count'] %>
+         OS           : <%= @os['distro']['description'] %> 
          ============
          
-
-
-
