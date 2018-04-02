@@ -38,12 +38,5 @@ class profile::base {
      uid      => '5010',
      ssh_key_content => 'AAAAB3NzaC1yc2EAAAADAQABAAACAQDQHlcTYmKoiD5NmBVrWfR6L6rPI29o5XtIHEjpbWMmgJfpEmZKTxC5gldz344Jnpa4l2yn9+bLBNzyGPW7dFLr6xJ5A60DnrfxmzU98KBtYXzQq/Bjsg+nLA7yEeVhtGWLdkLrrXS+LT48FGXdF9x1ejw4pLu6wMg0cGE5nz2pb+NrNp6YGNnc1Dh+mVnp/AsCZmjC6shDbnedu2QoQpFTUM1yF9uYufEcduVExfDuH+9P+lwffE5zzDNDUU9XiG6kTFHDBFV2d6HS6IWGqct563CD2TCop53gZSTQB/3h0b91eBa857KTffXoKsXYx4Rgm4r9zCIMAJVZZYPuQNky/JjpZI48z7DqKGqwD6pQ/ipZqrElXVTXsZrrb96UzI8SUAeykfSHFJ1F34og5u7hB2t8ScPzEhMu/zns59rb5KhUgmEzGLG5Kz4W67B7Y0h6xN7tLRliaTH7InkZQal0EDrqrcWM1rjLikhZQas2W63KEEuH07fRmIo+LjSu1XTUgvDmnfh/0ePyKANGS27g0E0tsV992xY+FBEvjff6fSwZXQ5cNjKYrBLnCkVyqa6gtf1c1WaHXs/yjlxM1CZdw9dbQ+dKE8FKLxD5REClCUWTMpawEVXRKjQnfglGnPf8bxgZ5me2GvQNVpa3rYd5KlFSz8W1JMDEPwu1NFrUIQ==',
     }
-    
-    user { 'testtwo':
-      ensure          => absent,
-    }
-    
-    user { 'testuser':
-      ensure          => absent,
-    }
+
 }
