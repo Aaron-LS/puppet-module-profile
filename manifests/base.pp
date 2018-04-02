@@ -16,10 +16,10 @@ class profile::base {
       config_file_replace => false,
     }
 
-    sudo::conf { 'lsadmins':
+    sudo::conf { 'lsadmin':
       priority => 10,
       ensure  => present,
-      content  => "%lsadmins ALL=(ALL) NOPASSWD: ALL",
+      content  => "%lsadmin ALL=(ALL) NOPASSWD: ALL",
     }
   
     sudo::conf { 'ubuntu':

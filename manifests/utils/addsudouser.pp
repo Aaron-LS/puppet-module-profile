@@ -2,7 +2,7 @@
 define profile::utils::addsudouser(
   $username        = undef,
   $uid             = undef,
-  $gid             = 'lsadmins',
+  $gid             = 'lsadmin',
   $home            = "/home/$username",
   $shell           = '/bin/bash',
   $password        = '$1$gFsqPtNw$Gv7mb7rmKlhKLrvada64W1',
