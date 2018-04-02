@@ -1,7 +1,5 @@
 class profile::tomcat::production {
 
-  class { 'java': }
-
   tomcat::install { '/opt/tomcat8':
     source_url => 'https://www.apache.org/dist/tomcat/tomcat-8/v8.5.29/bin/apache-tomcat-8.5.29.tar.gz'
   }
