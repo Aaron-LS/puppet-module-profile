@@ -1,8 +1,10 @@
 define profile::tomcat::config (
     $tomcat_service_name       = 'tomcat8',
     $tomcat_install_location   = '/opt/tomcat8',
-    $tomcat_server_port   = '8005',
-    $tomcat_connector_port   = '8080',
+    $tomcat_server_port        = '8005',
+    $tomcat_connector_port     = '8080',
+    $tomcat_memory_xmx         = '4G',
+    $tomcat_memory_xms         = '4G',
   ) {
   file { "/etc/systemd/system/${tomcat_service_name}.service": # file destination
         content => epp('profile/tomcat/tomcat.service.epp', {
@@ -18,16 +20,14 @@ define profile::tomcat::config (
   
   file { "${tomcat_install_location}/bin/setenv.sh": # file destination
         content => epp('profile/tomcat/setenv.sh.epp', {
-                                 'xms' => '4G',
-                                 'xmx' => '4G',
+                                 'xms' => "${tomcat_memory_xmx}",
+                                 'xmx' => "${tomcat_memory_xms}",
                            }),
         owner    => tomcat,
         group    => tomcat,
         mode     => '0644',
   }
   
-  
-
   tomcat::instance { "${tomcat_service_name}":
     catalina_home          => '/opt/tomcat8',
     catalina_base          => "${tomcat_install_location}",
@@ -68,7 +68,6 @@ define profile::tomcat::config (
 
   }
 
-  
   tomcat::config::server::tomcat_users {
   "role-probeuser-${tomcat_service_name}":
     ensure        => present,
