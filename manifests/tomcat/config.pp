@@ -56,6 +56,13 @@ define profile::tomcat::config (
       'redirectPort' => '8443'
     },
   }
+  
+  tomcat::config::server::connector { "${tomcat_service_name}-apj-remove":
+    catalina_base         => "${tomcat_install_location}",
+    protocol              => 'AJP/1.3',
+    connector_ensure      => 'absent',
+  }
+
 
   tomcat::service { "${tomcat_service_name}":
     service_name   => "${tomcat_service_name}",
