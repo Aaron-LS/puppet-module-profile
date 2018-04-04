@@ -55,7 +55,7 @@ export CATALINA_OPTS="$CATALINA_OPTS -Xss512k"
 # taken off the CPU. This can have severe consequences if requests continue
 # to accrue during these 'outage' periods. (specifically webservices, webapps)
 # [Also enables adaptive sizing automatically]
-export CATALINA_OPTS="$CATALINA_OPTS -XX:+UseParallelGC"
+# export CATALINA_OPTS="$CATALINA_OPTS -XX:+UseParallelGC"
 
 # This is interpreted as a hint to the garbage collector that pause times
 # of <nnn> milliseconds or less are desired. The garbage collector will
@@ -76,7 +76,7 @@ export CATALINA_OPTS="$CATALINA_OPTS -server"
 
 # Disable remote (distributed) garbage collection by Java clients
 # and remove ability for applications to call explicit GC collection
-export CATALINA_OPTS="$CATALINA_OPTS -XX:+DisableExplicitGC"
+# export CATALINA_OPTS="$CATALINA_OPTS -XX:+DisableExplicitGC"
 
 export CATALINA_OPTS="$CATALINA_OPTS -Djava.awt.headless=true -Djava.net.preferIPv4Stack=true -Xverify:none"
 export CATALINA_OPTS="$CATALINA_OPTS -XX:+UseG1GC -XX:+AlwaysPreTouch  -XX:ReservedCodeCacheSize=256m -XX:InitialCodeCacheSize=128m -XX:CompileThreshold=3000 -XX:OnStackReplacePercentage=933 -XX:+UseCodeCacheFlushing"

@@ -56,12 +56,6 @@ define profile::tomcat::config (
       'redirectPort' => '8443'
     },
   }
-  
-  tomcat::setenv::entry { "${tomcat_service_name}":
-    ensure   => 'present',
-    param    => ''
-  }
-
 
   tomcat::service { "${tomcat_service_name}":
     service_name   => "${tomcat_service_name}",
