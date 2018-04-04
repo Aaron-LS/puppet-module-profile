@@ -15,6 +15,18 @@ define profile::tomcat::config (
         group    => root,
         mode     => '0644',
   }
+  
+  file { "${tomcat_install_location}/bin/setenv.sh": # file destination
+        content => epp('profile/tomcat/setenv.sh.epp', {
+                                 'xms' => '4G',
+                                 'xmx' => '4G',
+                           }),
+        owner    => tomcat,
+        group    => tomcat,
+        mode     => '0644',
+  }
+  
+  
 
   tomcat::instance { "${tomcat_service_name}":
     catalina_home          => '/opt/tomcat8',
@@ -44,6 +56,12 @@ define profile::tomcat::config (
       'redirectPort' => '8443'
     },
   }
+  
+  tomcat::setenv::entry { "${tomcat_service_name}":
+    ensure   => 'present',
+    param    => ''
+  }
+
 
   tomcat::service { "${tomcat_service_name}":
     service_name   => "${tomcat_service_name}",
