@@ -52,6 +52,7 @@ define profile::tomcat::config (
     catalina_base         => "${tomcat_install_location}",
     port                  => "$tomcat_connector_port",
     protocol              => 'HTTP/1.1',
+    purge_connectors      => true,
     additional_attributes => {
       'redirectPort' => '8443'
     },
