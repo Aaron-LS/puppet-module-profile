@@ -1,6 +1,8 @@
 class profile::apache::production  {
-  include profile::apache:install
-  
+  class { '::profile::apache::install' : } -> class { 'profile::apache::setup' :}  
+}
+
+class profile::apache::setup {
   $server_hostname = "${facts['networking']['hostname']}"
   class { '::apache':
     default_vhost => false,
@@ -58,4 +60,5 @@ class profile::apache::production  {
       },
     ],
   }
+  
 }
