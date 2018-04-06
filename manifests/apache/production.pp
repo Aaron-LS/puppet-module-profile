@@ -30,8 +30,12 @@ class profile::apache::setup {
   
   }
   
+  class { '::apache::mod::security':
+    modsec_secruleengine => 'On',
+    audit_log_relevant_status => undef,
+    activated_rules           => [ '/usr/share/modsecurity-crs/base_rules/modsecurity_35_bad_robots.data', '/usr/share/modsecurity-crs/base_rules/modsecurity_35_scanners.data', '/usr/share/modsecurity-crs/base_rules/modsecurity_40_generic_attacks.data', '/usr/share/modsecurity-crs/base_rules/modsecurity_50_outbound.data', '/usr/share/modsecurity-crs/base_rules/modsecurity_50_outbound_malware.data', '/usr/share/modsecurity-crs/base_rules/modsecurity_crs_20_protocol_violations.conf', '/usr/share/modsecurity-crs/base_rules/modsecurity_crs_23_request_limits.conf', '/usr/share/modsecurity-crs/base_rules/modsecurity_crs_35_bad_robots.conf', '/usr/share/modsecurity-crs/base_rules/modsecurity_crs_40_generic_attacks.conf', '/usr/share/modsecurity-crs/base_rules/modsecurity_crs_41_sql_injection_attacks.conf', '/usr/share/modsecurity-crs/base_rules/modsecurity_crs_41_xss_attacks.conf', '/usr/share/modsecurity-crs/base_rules/modsecurity_crs_42_tight_security.conf', '/usr/share/modsecurity-crs/base_rules/modsecurity_crs_45_trojans.conf', '/usr/share/modsecurity-crs/base_rules/modsecurity_crs_47_common_exceptions.conf', '/usr/share/modsecurity-crs/base_rules/modsecurity_crs_48_local_exceptions.conf.example', '/usr/share/modsecurity-crs/base_rules/modsecurity_crs_49_inbound_blocking.conf', '/usr/share/modsecurity-crs/base_rules/modsecurity_crs_59_outbound_blocking.conf'],
+  }
   
-  # Exaple parameter usage:
   class { '::apache::mod::pagespeed':
     rewrite_level => 'PassThrough',
     enable_filters => [
@@ -83,7 +87,7 @@ class profile::apache::setup {
     ssl            => true,
     proxy_pass => [
       {
-        'path' => '/',
+        'path' => '/QA',
         'url'  => 'http://localhost:8081/',
         'params'   => {
           'retry'     => '10',
