@@ -1,5 +1,32 @@
 class profile::apache::production  {
   class { '::profile::apache::install' : } -> class { 'profile::apache::setup' :}  
+  
+  file { $serverSSL_dirs:
+    ensure => 'directory',
+    owner  => 'root',
+    group  => 'root',
+    mode   => '0400',
+  }
+  
+  file { "/var/lib/apache2/ssl/legal-suite.crt": # file destination
+        source   => 'puppet:///modules/profile/legal-suite.crt',
+        owner    => root,
+        group    => root,
+        mode     => '0400',
+  }
+
+  file { "/var/lib/apache2/ssl/legal-suite.key": # file destination
+        source   => 'puppet:///modules/profile/legal-suite.key',
+        owner    => root,
+        group    => root,
+        mode     => '0400',
+  }
+
+}
+
+
+  
+  
 }
 
 class profile::apache::setup {
@@ -8,6 +35,12 @@ class profile::apache::setup {
     default_vhost => false,
     mpm_module => false,
   }
+  
+  $serverSSL_dirs = [ "/var/lib/apache2/ssl" ]
+                  
+  
+  
+  
   
   class { '::apache::mod::event':
     startservers            => '2',
@@ -97,6 +130,8 @@ class profile::apache::setup {
     ssl_protocol   => 'all -SSLv3 -TLSv1 -TLSv1.1',
     ssl_cipher     => 'ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-CHACHA20-POLY1305:ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-SHA384:ECDHE-RSA-AES256-SHA384:ECDHE-ECDSA-AES128-SHA256:ECDHE-RSA-AES128-SHA256',
     ssl_honorcipherorder => 'On',
+    ssl_cert => '/var/lib/apache2/ssl/legal-suite.crt',
+    ssl_key  => '/var/lib/apache2/ssl/legal-suite.key',
     proxy_pass => [
       {
         'path' => '/',
