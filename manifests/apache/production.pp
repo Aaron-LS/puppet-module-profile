@@ -30,6 +30,14 @@ class profile::apache::setup {
   
   }
   
+  class { '::apache::mod::headers':
+  
+  }
+  
+  class { '::apache::mod::expires':
+  
+  }
+  
   class { '::apache::mod::security':
     modsec_secruleengine => 'On',
     audit_log_relevant_status => undef,
@@ -75,6 +83,21 @@ class profile::apache::setup {
           },
       },
     ],
+    directories => [
+    {
+        path => '.*\.cache\..*',
+        provider => 'locationmatch',
+        custom_fragment => '
+    ModPagespeed Off
+
+    Header Unset Cache-Control
+
+    ExpiresDefault "now plus 1 year"
+
+    Header Set Cache-Control "max-age=31536000"
+    ',
+      },
+    ]
   }
 
   

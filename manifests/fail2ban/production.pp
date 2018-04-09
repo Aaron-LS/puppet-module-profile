@@ -24,6 +24,7 @@ class profile::fail2ban::production (
     path   => '/etc/fail2ban/jail.conf',
     line   => "ignoreip = 127.0.0.1/8 ${publicips}",
     match  => 'ignoreip = 127.0.0.1/8',
+    notify   => Service['fail2ban']
   } 
   
   service { 'fail2ban':
