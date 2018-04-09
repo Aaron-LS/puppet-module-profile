@@ -19,6 +19,16 @@ class profile::apache::setup {
     maxconnectionsperchild  => '4096', 
   }
   
+  apache::custom_config { 'Cookies':
+    filename => 'Cookies.conf',
+    content  => 'Header edit Set-Cookie ^(.*)$ $1;HttpOnly;Secure',
+  }
+  
+  apache::custom_config { 'ClickJacking':
+    filename => 'ClickJacking.conf',
+    content  => 'Header always append X-Frame-Options SAMEORIGIN',
+  }
+  
   class { '::apache::mod::proxy':
     proxy_requests => 'Off',
     
@@ -50,6 +60,23 @@ class profile::apache::setup {
       'combine_javascript','convert_meta_tags','extend_cache','fallback_rewrite_css_urls','flatten_css_imports','inline_css','inline_import_to_link','inline_javascript','rewrite_css','rewrite_images','rewrite_javascript','rewrite_style_attributes_with_url','collapse_whitespace','elide_attributes','trim_urls','remove_comments','remove_quotes','insert_image_dimensions,sprite_images,lazyload_images,dedup_inlined_images','rewrite_style_attributes','move_css_to_head','move_css_above_scripts','extend_cache_pdfs','insert_dns_prefetch'
     ]
   }
+  
+  file_line { 'ServerSignature':
+    ensure => present,
+    path   => '/etc/apache2/conf-enabled/security.conf',
+    line   => "ServerSignature Off",
+    match  => 'ServerSignature On',
+    notify   => Service['apache2']
+  } 
+  
+  file_line { 'ServerTokens':
+    ensure => present,
+    path   => '/etc/apache2/conf-enabled/security.conf',
+    line   => "ServerTokens ProductOnly",
+    match  => 'ServerTokens OS',
+    notify   => Service['apache2']
+  } 
+  
   # Vhost to redirect non-ssl to ssl using old rewrite method
   apache::vhost { 'non-ssl':
     vhost_name   => '*',

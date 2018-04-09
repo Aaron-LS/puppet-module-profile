@@ -7,7 +7,7 @@ define profile::tomcat::config (
     $tomcat_memory_xms         = '4G',
   ) {
   file { "/etc/systemd/system/${tomcat_service_name}.service": # file destination
-        content => epp('profile/tomcat/tomcat.service.epp', {
+        content  => epp('profile/tomcat/tomcat.service.epp', {
                                  'catalinaHome' => '/opt/tomcat8',
                                  'catalinaBase' => "${tomcat_install_location}",
                                  'tomcatUser'   => 'tomcat',
@@ -118,5 +118,37 @@ define profile::tomcat::config (
     catalina_base => "${tomcat_install_location}",
     war_source    => 'puppet:///modules/profile/LSProbe.war',
   }  
+  
+  $serverInfo_dirs = [ "${tomcat_install_location}/lib/org/",
+                    "${tomcat_install_location}/lib/org/apache/", "${tomcat_install_location}/lib/org/apache/catalina/", 
+                    "${tomcat_install_location}/lib/org/apache/catalina/util/"
+                  ]
+
+  
+  file { $serverInfo_dirs:
+    ensure => 'directory',
+    owner  => 'tomcat',
+    group  => 'tomcat',
+    mode   => '0640',
+  }
+  
+  file { "${tomcat_install_location}/lib/org/apache/catalina/util/ServerInfo.properties": # file destination
+        content  => 'server.info=Application Server
+server.number=unknown
+server.built=unknown',
+        owner    => tomcat,
+        group    => tomcat,
+        mode     => '0640',
+  }
+  
+  tomcat::config::server::valve { "ErrorReportValve${tomcat_service_name}" :
+    catalina_base         => "${tomcat_install_location}",
+    class_name            => "org.apache.catalina.valves.ErrorReportValve",
+    additional_attributes => {
+      showReport     => "false",
+      showServerInfo => "false"
+    }
+
+  }
   
 }

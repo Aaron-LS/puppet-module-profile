@@ -6,17 +6,19 @@ class profile::fail2ban::production (
     ensure => installed,
   }
   file { "/etc/fail2ban/jail.conf": # file destination
-    content => epp('profile/fail2ban/jail.conf.epp', {}),
+    content  => epp('profile/fail2ban/jail.conf.epp', {}),
     owner    => root,
     group    => root,
     mode     => '0644',
+    ensure   => present,
   }
   
   file { "/etc/fail2ban/filter.d/modsec.conf": # file destination
-    content => epp('profile/fail2ban/modsec.conf.epp', {}),
+    content  => epp('profile/fail2ban/modsec.conf.epp', {}),
     owner    => root,
     group    => root,
     mode     => '0644',
+    ensure   => present,
   }
 
   file_line { 'publicips':
