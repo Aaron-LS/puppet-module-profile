@@ -24,11 +24,6 @@ class profile::apache::production  {
 
 }
 
-
-  
-  
-}
-
 class profile::apache::setup {
   $server_hostname = "${facts['networking']['hostname']}"
   class { '::apache':
@@ -38,10 +33,6 @@ class profile::apache::setup {
   
   $serverSSL_dirs = [ "/var/lib/apache2/ssl" ]
                   
-  
-  
-  
-  
   class { '::apache::mod::event':
     startservers            => '2',
     minsparethreads         => '32',
