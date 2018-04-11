@@ -3,7 +3,7 @@ class profile::postfix {
     
 }
 
-class profile::posffix::production inherits profile::postfix {
+class profile::postfix::production inherits profile::postfix {
   
   package { 'postfix':
     ensure => 'installed',
@@ -14,10 +14,24 @@ class profile::posffix::production inherits profile::postfix {
   file_line { 'mydestination':
     ensure => present,
     path   => '/etc/postfix/main.cf',
-    line   => "mydestination =  ${$hostnames}",
+    line   => "mydestination = ${$hostnames}",
     match  => 'mydestination = ',
+    notify => Service['postfix']
   } 
 
+  file_line { 'myhostname':
+    ensure => present,
+    path   => '/etc/postfix/main.cf',
+    line   => "myhostname = $server_hostname.legal-suite.com",
+    match  => 'myhostname = ',
+    notify => Service['postfix']
+  } 
+  
+  service {'postfix' :
+    ensure => running,
+  }
+  
+  
 }
 
 

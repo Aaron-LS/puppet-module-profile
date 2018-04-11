@@ -1,6 +1,6 @@
 class profile::apache::production  {
   class { '::profile::apache::install' : } -> class { 'profile::apache::setup' :}  
-  
+  $serverSSL_dirs = [ "/var/lib/apache2/ssl" ]
   file { $serverSSL_dirs:
     ensure => 'directory',
     owner  => 'root',
@@ -30,8 +30,6 @@ class profile::apache::setup {
     default_vhost => false,
     mpm_module => false,
   }
-  
-  $serverSSL_dirs = [ "/var/lib/apache2/ssl" ]
                   
   class { '::apache::mod::event':
     startservers            => '2',
